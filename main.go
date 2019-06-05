@@ -28,24 +28,24 @@ func main() {
 		return
 	}
 
-	os.Mkdir("theme", os.ModePerm)	
+	os.Mkdir("theme", os.ModePerm)
 	os.Mkdir("theme/"+widget, os.ModePerm)
 
-	var path = "theme/"+widget+"/"+widget+".go"
+	var path = "theme/" + widget + "/" + widget + ".go"
 	if _, err := os.Stat(path); err != nil {
 		var file, _ = os.Create(path)
 
-			file.Write([]byte(`package `+widget+`
+		file.Write([]byte(`package ` + widget + `
 
 import "github.com/qlova/seed"
-import "github.com/qlova/seed/widgets/`+widget+`"
+import "github.com/qlova/seed/widgets/` + widget + `"
 
 type Widget struct {
-	`+widget+`.Widget
+	` + widget + `.Widget
 }
 
 func New() Widget {
-	widget := `+widget+`.New()
+	widget := ` + widget + `.New()
 
 	//Add custom styles here.
 
@@ -60,7 +60,7 @@ func AddTo(parent seed.Interface) Widget {
 
 			`))
 
-			file.Close()
+		file.Close()
 
 		fmt.Println("New themed widget created!")
 		return
@@ -73,6 +73,6 @@ func AddTo(parent seed.Interface) Widget {
 		fmt.Println("Please configure $EDITOR env variable, pointing to your text editor.")
 		return
 	}
-	
+
 	exec.Command(editor, path).Run()
 }
