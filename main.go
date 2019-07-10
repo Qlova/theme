@@ -24,7 +24,7 @@ func main() {
 	var widget = os.Args[1]
 
 	if strings.Contains(widget, "/") {
-		fmt.Println("external widgets are not supported yet, sorry :/")
+		fmt.Println("external seeds are not supported yet, sorry :/")
 		return
 	}
 
@@ -35,27 +35,29 @@ func main() {
 	if _, err := os.Stat(path); err != nil {
 		var file, _ = os.Create(path)
 
+		var Widget = strings.Title(widget)
+
 		file.Write([]byte(`package ` + widget + `
 
 import "github.com/qlova/seed"
-import "github.com/qlova/seed/widgets/` + widget + `"
+import "github.com/qlova/seeds/` + widget + `"
 
-type Widget struct {
-	` + widget + `.Widget
+type Seed struct {
+	` + widget + `.Seed
 }
 
-func New() Widget {
-	widget := ` + widget + `.New()
+func New() Seed {
+	var ` + Widget + ` = ` + widget + `.New()
 
 	//Add custom styles here.
 
-	return  Widget{widget}
+	return  Seed{` + Widget + `}
 }
 
-func AddTo(parent seed.Interface) Widget {
-	var widget = New()
-	parent.Root().Add(widget)
-	return widget
+func AddTo(parent seed.Interface) Seed {
+	var ` + Widget + ` = New()
+	parent.Root().Add(` + Widget + `)
+	return ` + Widget + `
 }
 
 			`))
