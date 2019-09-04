@@ -19,6 +19,8 @@ func New(options Options) Seed {
 	Layout.SetClass("mdl-layout mdl-js-layout mdl-layout--fixed-header")
 
 	Layout.Add(options.AppBar)
+	Layout.Add(options.Drawer)
+	Layout.Add(options.Content)
 
 	return Seed{Layout}
 }
