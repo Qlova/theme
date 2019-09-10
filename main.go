@@ -33,7 +33,11 @@ func main() {
 
 	var path = "theme/" + widget + "/" + widget + ".go"
 	if _, err := os.Stat(path); err != nil {
-		var file, _ = os.Create(path)
+		var file, err = os.Create(path)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 
 		var Widget = strings.Title(widget)
 
@@ -42,10 +46,12 @@ func main() {
 import "github.com/qlova/seed"
 import "github.com/qlova/seeds/` + widget + `"
 
+//Seed is a new ` + widget + `.
 type Seed struct {
 	` + widget + `.Seed
 }
 
+//New returns a new ` + widget + `.
 func New() Seed {
 	var ` + Widget + ` = ` + widget + `.New()
 
@@ -54,6 +60,7 @@ func New() Seed {
 	return  Seed{` + Widget + `}
 }
 
+//AddTo adds a new ` + widget + ` to the specified parent and then returns it.
 func AddTo(parent seed.Interface) Seed {
 	var ` + Widget + ` = New()
 	parent.Root().Add(` + Widget + `)
